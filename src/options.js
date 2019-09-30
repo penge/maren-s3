@@ -4,9 +4,9 @@ const themes = [
   '--cache-control', 'max-age=604800' // 1 week
 ];
 
-const images = [
+const static = [
   '--exclude', '*',
-  '--include', 'images/*',
+  '--include', 'static/*',
   '--cache-control', 'max-age=31536000' // 1 year
 ];
 
@@ -18,6 +18,6 @@ const html = [
 
 module.exports = {
   themes,
-  images,
+  static,
   html
 };

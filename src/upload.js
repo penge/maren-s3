@@ -15,7 +15,7 @@ const upload = (localPath, s3Uri, options, dryrun) => {
  * Upload <cwd>/_build to <bucket>
  */
 module.exports = argv => {
-  const { cwd, bucket, themes, images, html, dryrun } = argv;
+  const { cwd, bucket, themes, static, html, dryrun } = argv;
   const localPath = `${cwd}/_build`;
   const s3Uri = `s3://${bucket}`;
 
@@ -23,8 +23,8 @@ module.exports = argv => {
     upload(localPath, s3Uri, options.themes, dryrun);
   }
 
-  if (images) {
-    upload(localPath, s3Uri, options.images, dryrun);
+  if (static) {
+    upload(localPath, s3Uri, options.static, dryrun);
   }
 
   if (html) {

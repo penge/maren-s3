@@ -1,7 +1,7 @@
 const upload = require('./src/upload');
 
 const command = [
-  'upload <bucket> [--themes] [--images] [--html] [--dryrun]',
+  'upload <bucket> [--themes] [--static] [--html] [--dryrun]',
   'upload to S3',
   yargs => {
     yargs.positional('themes', {
@@ -10,10 +10,10 @@ const command = [
       describe: 'upload themes'
     });
 
-    yargs.positional('images', {
+    yargs.positional('static', {
       type: 'boolean',
       default: false,
-      describe: 'upload images'
+      describe: 'upload static'
     });
 
     yargs.positional('html', {
@@ -30,9 +30,9 @@ const command = [
   },
   argv => {
     // By default, upload everything
-    if (!argv.themes && !argv.images && !argv.html) {
+    if (!argv.themes && !argv.static && !argv.html) {
       argv.themes = true;
-      argv.images = true;
+      argv.static = true;
       argv.html = true;
     }
 

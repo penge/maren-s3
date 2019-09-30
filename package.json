@@ -1,6 +1,6 @@
 {
   "name": "maren-s3",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": "Pavel Bucka",
   "description": "plugin to upload _build to s3",
   "keywords": [

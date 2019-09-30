@@ -32,7 +32,7 @@ Make sure to have installed
 ```
 $ maren upload <bucket>
   [--themes]
-  [--images]
+  [--static]
   [--html]
   [--dryrun]
 ```
