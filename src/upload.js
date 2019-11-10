@@ -1,33 +1,44 @@
-const { spawn } = require('child_process');
-const options = require('./options');
-
-const upload = (localPath, s3Uri, options, dryrun) => {
-  const args = ['s3', 'cp', localPath, s3Uri,
-    '--recursive',
-    '--acl', 'public-read',
-    ...options,
-    ...(dryrun ? ['--dryrun'] : [])
-  ];
-  spawn('aws', args, { stdio: 'inherit' });
-};
+const path = require('path');
+const fg = require('fast-glob');
+const checkBucketExists = require('./check-bucket-exists');
+const uploadEnries = require('./upload-entries');
 
 /**
  * Upload <cwd>/_build to <bucket>
  */
-module.exports = argv => {
+module.exports = async argv => {
   const { cwd, bucket, themes, static, html, dryrun } = argv;
-  const localPath = `${cwd}/_build`;
-  const s3Uri = `s3://${bucket}`;
+
+  const bucketExists = await checkBucketExists(bucket);
+  if (!bucketExists) {
+    console.log(`"${bucket}" does not exist!`);
+    process.exit(1);
+  }
+
+  const baseFolder = path.join(cwd, '_build');
+
+  if (!dryrun) console.log(`Uploading to ${bucket}.`);
+  let entries = [];
 
   if (themes) {
-    upload(localPath, s3Uri, options.themes, dryrun);
+    const pattern = path.join(baseFolder, 'themes/**');
+    entries.push(...(await fg(pattern)));
   }
 
   if (static) {
-    upload(localPath, s3Uri, options.static, dryrun);
+    const pattern = path.join(baseFolder, 'static/**');
+    entries.push(...(await fg(pattern)));
   }
 
   if (html) {
-    upload(localPath, s3Uri, options.html, dryrun);
+    const pattern = path.join(baseFolder, '/**/*.html');
+    entries.push(...(await fg(pattern)));
   }
+
+  // Upload files to S3
+  uploadEnries(bucket, baseFolder, entries, { dryrun });
+
+  process.on('exit', () => {
+    if (!dryrun) process.stdout.write('\r\nDone!\r\n');
+  });
 };

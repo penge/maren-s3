@@ -1,19 +1,16 @@
 # Maren S3
 
-[![Maren](https://img.shields.io/badge/MAREN.IO-blue?style=for-the-badge)](https://maren.io)
-
-Maren plugin that uploads `_build` to S3.
+Maren plugin to upload `_build` to AWS S3.
 
 Can be used independently to upload any project.
 
-## Installation
+## Install
 
 ```
-$ npm init (inside Maren project, if not done before)
-$ npm i maren-s3
+$ npm install maren-s3
 ```
 
-Then update `maren.json`:
+Update `maren.json`:
 
 ```json
 {
@@ -23,9 +20,6 @@ Then update `maren.json`:
   ]
 }
 ```
-
-Make sure to have installed
-[AWS Command Line Interface](https://aws.amazon.com/cli/).
 
 ## Use
 

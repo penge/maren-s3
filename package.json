@@ -1,6 +1,6 @@
 {
   "name": "maren-s3",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "author": "Pavel Bucka",
   "description": "plugin to upload _build to s3",
   "keywords": [
@@ -12,7 +12,12 @@
     "aws"
   ],
   "main": "index.js",
-  "repository": "penge/maren-s3",
+  "repository": "https://github.com/penge/maren-s3",
   "homepage": "https://maren.io",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.568.0",
+    "fast-glob": "^3.1.0",
+    "mime-types": "^2.1.24"
+  }
 }
